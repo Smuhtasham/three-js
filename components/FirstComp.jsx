@@ -1,6 +1,6 @@
-"use client";
-import React, { useEffect, useRef } from "react";
-import * as THREE from "three";
+"use client"
+import React, { useEffect, useRef } from 'react';
+import * as THREE from 'three';
 
 const FirstComp = () => {
   const mountRef = useRef(null);
@@ -15,21 +15,45 @@ const FirstComp = () => {
     );
     const renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
+    mountRef.current.appendChild(renderer.domElement);
 
-    if (mountRef.current) {
-      mountRef.current.appendChild(renderer.domElement);
-    }
-
-    const geometry = new THREE.BoxGeometry(0.5, 0.5, 1);
+    const geometry = new THREE.BoxGeometry(0.5,0.5, 0.5);
     const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
     const cube = new THREE.Mesh(geometry, material);
     scene.add(cube);
 
-    camera.position.z = 2;
+    camera.position.z = 5;
+
+    let flagX = true; 
+    let flagY = true; 
+    const boundaryX = 8;
+    const boundaryY = 3.3;
+    const speed = 0.12; 
 
     const animate = () => {
-      cube.rotation.x += 0.01;
-      cube.rotation.y += 0.01;
+      // Check boundaries for X-axis
+      if (cube.position.x > boundaryX) {
+        flagX = false;
+      } else if (cube.position.x < -boundaryX) {
+        flagX = true;
+      }
+
+      // Check boundaries for Y-axis
+      if (cube.position.y > boundaryY) {
+        flagY = false;
+      } else if (cube.position.y < -boundaryY) {
+        flagY = true;
+      }
+
+      // Update position based on direction flags
+      cube.position.x += flagX ? speed : -speed;
+      cube.position.y += flagY ? speed : -speed;
+
+      // Rotate the cube
+      cube.rotation.x += 0.03;
+      cube.rotation.y += 0.03;
+
+      // Render the scene
       renderer.render(scene, camera);
     };
 
@@ -37,15 +61,11 @@ const FirstComp = () => {
 
     return () => {
       renderer.dispose();
-      mountRef.current?.removeChild(renderer.domElement);
+      mountRef.current.removeChild(renderer.domElement);
     };
   }, []);
 
-  return (
-    <div>
-      <div ref={mountRef}></div>
-    </div>
-  );
+  return <div ref={mountRef} />;
 };
 
 export default FirstComp;
