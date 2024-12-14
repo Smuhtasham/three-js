@@ -29,7 +29,6 @@ const FirstComp = () => {
     const boundaryX = 8;
     const boundaryY = 3.3;
     const speed = 0.12; 
-
     const animate = () => {
       // Check boundaries for X-axis
       if (cube.position.x > boundaryX) {
@@ -67,5 +66,4 @@ const FirstComp = () => {
 
   return <div ref={mountRef} />;
 };
-
 export default FirstComp;
