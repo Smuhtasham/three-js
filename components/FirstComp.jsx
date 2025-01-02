@@ -43,7 +43,6 @@ const FirstComp = () => {
       } else if (cube.position.y < -boundaryY) {
         flagY = true;
       }
-
       // Update position based on direction flags
       cube.position.x += flagX ? speed : -speed;
       cube.position.y += flagY ? speed : -speed;
