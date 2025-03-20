@@ -1,8 +1,9 @@
-import FirstComp from "@/components/FirstComp";
-import Image from "next/image";
+import ThreeDModel from "@/components/ThreeDModel";
 
 export default function Home() {
   return (
-    <FirstComp/>
+    <div>
+      <ThreeDModel />
+    </div>
   );
 }
